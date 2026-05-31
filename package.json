@@ -1,0 +1,42 @@
+{
+    "name": "email-address-parser",
+    "version": "1.0.0",
+    "description": "Parse an SMTP (RFC-5321+RFC-6531) address",
+    "main": "dist/lib/index.js",
+    "types": "dist/lib/index.d.ts",
+    "scripts": {
+        "build": "tsc",
+        "clean": "rm -rf node_modules dist",
+        "coverage": "jest --collectCoverage -- dist/test/*.test.js",
+        "prepare": "npm run build",
+        "test": "jest dist/test/*.test.js"
+    },
+    "engines": {
+        "node": ">=0.16"
+    },
+    "keywords": [
+        "RFC-5321",
+        "address",
+        "email",
+        "envelope",
+        "rfc2821",
+        "rfc5321",
+        "rfc821"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/gene-hightower/email-address-parser.git"
+    },
+    "author": "Gene Hightower <gene@digilicious.com> (https://digilicious.com/)",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/gene-hightower/email-address-parser/issues"
+    },
+    "homepage": "https://github.com/gene-hightower/email-address-parser#readme",
+    "devDependencies": {
+        "@types/jest": "^30.0.0",
+        "@types/node": "^25.9.1",
+        "jest": "^30.4.2",
+        "typescript": "^6.0.3"
+    }
+}

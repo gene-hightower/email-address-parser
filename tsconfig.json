@@ -1,0 +1,20 @@
+{
+    "compilerOptions": {
+        "lib": ["es2022"],
+        "module": "node16",
+        "target": "es2022",
+        "types": ["jest", "node"],
+
+        "strict": true,
+        "declaration": true,
+        "outDir": "dist",
+        "sourceMap": true,
+        "noFallthroughCasesInSwitch": true,
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+        "moduleResolution": "node16",
+        "esModuleInterop": true,
+        "skipLibCheck": true,
+        "forceConsistentCasingInFileNames": true
+    }
+}
