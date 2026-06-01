@@ -45,7 +45,7 @@ export function parse(address: string) {
         //console.log(`${address} too long`);
         throw new Error("address too long");
     }
-    const at_idx = address.lastIndexOf('@')     // One must be found in a valid address.
+    const at_idx = address.lastIndexOf("@");    // One must be found in a valid address.
     if (at_idx === -1) {
         //console.log(`${address} contains no @`);
         throw new Error("address contains no @");
@@ -68,11 +68,6 @@ export function parse(address: string) {
         //console.log(`${address} no domain`);
         throw new Error("no domain");
     }
-    /*
-    if (domain.length > 253) {          // The DNS protocol limit for a domain name, an address literal will be shorter.
-        throw new Error("domain too long");
-    }
-    */
     if ((domain[0] === '[') && (domain.at(-1) === ']')) {            // A v4 or v6 address literal.
         const content = domain.slice(1, -1);
         if (content.match(/^IPv6:/i)) {
@@ -183,6 +178,61 @@ export function parse(address: string) {
     }
     
 }
+
+export function domain_is_valid_for_dns(address: string) {
+    var domain;
+    const at_idx = address.lastIndexOf("@");
+    if (at_idx === -1) {
+        domain = address;
+    } else {
+        domain = address.substring(at_idx + 1);
+    }
+
+    if (domain.length === 0) {
+        //console.log(`${address} no domain`);
+        return false;
+    }
+    if (domain.length > 253) {          // The DNS protocol limit for a domain name, an address literal will be shorter.
+        //console.log("domain too long");
+        return false;
+    }
+
+    const labels = domain.split(".");
+
+    // Is domain fully qualified?
+    if (labels.length < 2) {
+        //console.log("domain not fully qualified");
+        return false;
+    }
+    if (labels[labels.length - 1].length < 2) {
+        //console.log("top level domain label too short");
+        return false;
+    }
+
+    labels.forEach((label) => {
+        if (label.length === 0) {       // Two consecutive dots,
+            //console.log(`${domain} has empty label`);
+            return false;
+        }
+        if (labels[0].length > 63) {
+            //console.log("domain label too long");
+            return false;
+        }
+        if (label[0] === '-' || label.at(-1) === '-') {
+            //console.log(`${label} may not start or end with hyphen`);
+            return false;
+        }
+        // Valid chars are letter, digit, or hyphen, plus any Unicode.
+        // A domain in an email address may not contain underscore.
+        if (label.match(/[^A-Za-z0-9\u0080-\uFFFF-]/)) {
+            //console.log(`${label} has bad char`);
+            return false;
+        }
+    });
+
+    return true;
+}
+
 
 /** Strip +something, strip '.'s, and map to lower case.
  */
