@@ -51,6 +51,11 @@ export function parse(address: string) {
         throw new Error("address contains no @");
     }
 
+    if ( address !== address.normalize('NFC') ) {
+        //console.log(`${address} is not in Normalization Form C (NFC)`);
+        throw new Error("address is not in Normalization Form C (NCF)");
+    }
+
     const local_part = address.substring(0, at_idx);
     const domain = address.substring(at_idx + 1);
 

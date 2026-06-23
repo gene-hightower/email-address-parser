@@ -205,7 +205,7 @@ describe("bad addresses fail", function () {
     });
     it("Unicode NOT NFC gene\u0301@example.com", function () {
         assert.throws(function () {
-            parse('e\u0301@example.com');
+            parse('gene\u0301@example.com');
         });
     });
 /*
